@@ -1,19 +1,28 @@
 pipeline {
-  agent none
+  agent {
+    dockerfile true
+  }
   stages {
+    stage ('Prepare') {
+      steps {
+        sh 'ls -la'
+        sh 'ceedling version'
+      }
+    }
     stage ('Build') {
       steps {
-        echo 'Build phase'
+        echo 'Building project'
       }
     }
     stage ('Unit tests') {
       steps {
-        echo 'Unit testing phase'
+        echo 'Running unit tests...'
+        sh 'ceedling test:all'
       }
     }
     stage ('Deploy') {
       steps {
-        echo 'Deploy phase'
+        echo 'Deploying application'
       }
     }
   }
